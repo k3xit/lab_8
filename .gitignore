@@ -1,0 +1,14 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+bin/
+obj/
+
+# IDE & OS
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
