@@ -8,7 +8,7 @@ class Program
     static void Main(string[] args)
     {
         string dbFilePath = "movies_db.bin";
-        DatabaseManager dbManager = null;
+        DatabaseManager? dbManager;
 
         try
         {
@@ -37,7 +37,7 @@ class Program
             Console.WriteLine("0. Выход");
             Console.Write("\nВыберите действие: ");
 
-            string choice = Console.ReadLine();
+            string? choice = Console.ReadLine();
 
             try
             {
@@ -97,7 +97,7 @@ class Program
     {
         Console.WriteLine("\n--- Добавление фильма ---");
         Console.Write("Название: ");
-        string title = Console.ReadLine();
+        string? title = Console.ReadLine();
 
         if (string.IsNullOrWhiteSpace(title))
             throw new ArgumentException(
@@ -107,10 +107,10 @@ class Program
         double rating = ReadDouble("Средняя оценка (0-10): ");
 
         Console.Write("Режиссер: ");
-        string director = Console.ReadLine();
+        string? director = Console.ReadLine();
 
         Console.Write("Компания: ");
-        string company = Console.ReadLine();
+        string? company = Console.ReadLine();
 
         dbManager.AddMovie(new Movie(title, year, rating,
             director, company));
@@ -142,9 +142,13 @@ class Program
         }
 
         if (dbManager.DeleteMovieByIndex(choice - 1))
+        {
             Console.WriteLine("Фильм успешно удален.");
+        }
         else
+        {
             Console.WriteLine("Ошибка при удалении.");
+        }
     }
 
     private static void PrintMovies(IEnumerable<Movie> movies)
@@ -167,7 +171,9 @@ class Program
     {
         Console.Write(prompt);
         if (int.TryParse(Console.ReadLine(), out int result))
+        {
             return result;
+        }
         throw new ArgumentException("Ожидалось целое число.");
     }
 
@@ -176,7 +182,9 @@ class Program
         Console.Write(prompt);
         if (double.TryParse(Console.ReadLine()?.Replace('.', ','),
             out double result))
+        {
             return result;
+        }
         throw new ArgumentException(
             "Ожидалось число с плавающей точкой.");
     }

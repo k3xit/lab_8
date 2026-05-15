@@ -86,8 +86,9 @@ public class DatabaseManager
     public bool DeleteMovieByIndex(int index)
     {
         if (index < 0 || index >= _movies.Count)
+        {
             return false;
-
+        }
         _movies.RemoveAt(index);
         SaveToFile();
         return true;
@@ -98,7 +99,7 @@ public class DatabaseManager
         return _movies.AsEnumerable();
     }
 
-    public IEnumerable<Movie> GetMoviesByDirector(string director)
+    public IEnumerable<Movie> GetMoviesByDirector(string? director)
     {
         return _movies
             .Where(m => m.Director.Equals(director,
@@ -118,12 +119,14 @@ public class DatabaseManager
         return _movies.OrderBy(m => m.ReleaseYear).FirstOrDefault();
     }
 
-    public double? GetAverageRatingByCompany(string company)
+    public double? GetAverageRatingByCompany(string? company)
     {
         var companyMovies = _movies.Where(m => m.Company.Equals(company,
             StringComparison.OrdinalIgnoreCase));
-        if (!companyMovies.Any()) return null;
-
+        if (!companyMovies.Any())
+        {
+            return null;
+        }
         return companyMovies.Average(m => m.Rating);
     }
 }
